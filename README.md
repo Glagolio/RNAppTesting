@@ -13,7 +13,9 @@ To run this project pull repository from the source code link, then install node
 
 ## First - please, type here your Full Name, Email, Phone
 
-Replace this string by your NAME, EMAIl, PHONE
+Mykhailo Shyhin
+shyhinm@gmail.com
++380931366389
 
 ## WHAT TO DO
 
