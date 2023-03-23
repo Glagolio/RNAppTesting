@@ -7,7 +7,7 @@ import LoadMoreBtn from "./LoadMoreBtn";
 export default function Homepage({ userData, setUserData }) {
   const [allUsers, setAllUsers] = useState([]);
   const [users, setUsers] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     fetch("https://moduleblocks.net/testing/Users.json")
@@ -15,15 +15,15 @@ export default function Homepage({ userData, setUserData }) {
       .then((allUsers) => {
         setAllUsers(allUsers);
         setUsers(allUsers.slice(0, 8));
-        setCurrentPage(1);
       })
       .catch((err) => console.error(err.message));
   }, []);
 
   const onPressLoadMoreBtn = (currentPage) => {
-    const nextUsersIndex = currentPage + 7;
+    const nextUsersIndex = currentPage * 8;
     const nextUsers = allUsers.slice(nextUsersIndex, nextUsersIndex + 8);
     setUsers((prevState) => [...prevState, ...nextUsers]);
+    setCurrentPage((prevState) => prevState + 1);
   };
 
   return (
