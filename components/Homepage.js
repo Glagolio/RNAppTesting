@@ -1,27 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  FlatList,
-  TouchableOpacity,
-  Platform,
-} from "react-native";
-import { useNavigation, useIsFocused } from "@react-navigation/native";
+import { View, StyleSheet, FlatList } from "react-native";
+// import { useNavigation, useIsFocused } from "@react-navigation/native";
 import UserCard from "./UserCard";
 import LoadMoreBtn from "./LoadMoreBtn";
 
-import {
-  getItemFromAsyncStorage,
-  mergeItemInAsyncStorage,
-  deleteItemFromAsyncStorage,
-  storeItemToAsyncStorage,
-} from "./AsyncStorageMethods";
-
 export default function Homepage({ userData, setUserData }) {
-  /// main navigation usage
-  const navigation = useNavigation();
   const [allUsers, setAllUsers] = useState([]);
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
@@ -47,14 +30,13 @@ export default function Homepage({ userData, setUserData }) {
     <View style={styles.container}>
       <View style={styles.center}>
         <View style={styles.homeView}>
-          {/* <Text style={styles.text}>MB testing</Text> */}
           <FlatList
             data={users}
             keyExtractor={(item) => item._id}
             renderItem={({ item }) => <UserCard info={item} />}
             ListFooterComponent={
               <LoadMoreBtn
-                onPress={async () => {
+                onPress={() => {
                   onPressLoadMoreBtn(currentPage);
                 }}
               />

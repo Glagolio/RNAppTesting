@@ -8,19 +8,11 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useIsFocused } from "@react-navigation/native";
 
-import {
-  getItemFromAsyncStorage,
-  mergeItemInAsyncStorage,
-  deleteItemFromAsyncStorage,
-} from "./AsyncStorageMethods";
+import { getItemFromAsyncStorage } from "./AsyncStorageMethods";
 
 export default function Account({ navigation }) {
-  /// main navigation usage
-  // const navigation = useNavigation();
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
