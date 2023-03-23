@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useIsFocused } from "@react-navigation/native";
 
 import {
   getItemFromAsyncStorage,
@@ -17,23 +18,20 @@ import {
   deleteItemFromAsyncStorage,
 } from "./AsyncStorageMethods";
 
-export default function Account() {
+export default function Account({ navigation }) {
   /// main navigation usage
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    // const getItem = async () => {
-    //   const data = await getItemFromAsyncStorage("users");
-    //   console.log(data);
-    // };
-    // getItem();
-
     const getUser = async () => {
       const user = await getItemFromAsyncStorage("user");
       setUserData(user);
     };
-    getUser();
+    const unsubscribe = navigation.addListener("focus", () => {
+      getUser();
+    });
+    return unsubscribe;
   }, []);
 
   if (!userData) {
