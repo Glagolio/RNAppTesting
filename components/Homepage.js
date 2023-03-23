@@ -6,6 +6,7 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import UserCard from "./UserCard";
@@ -36,11 +37,10 @@ export default function Homepage({ userData, setUserData }) {
       .catch((err) => console.error(err.message));
   }, []);
 
-  const onPressLoadMoreBtn = async (currentPage) => {
+  const onPressLoadMoreBtn = (currentPage) => {
     const nextUsersIndex = currentPage + 7;
     const nextUsers = allUsers.slice(nextUsersIndex, nextUsersIndex + 8);
     setUsers((prevState) => [...prevState, ...nextUsers]);
-    await storeItemToAsyncStorage("users", nextUsers);
   };
 
   return (
@@ -51,17 +51,10 @@ export default function Homepage({ userData, setUserData }) {
           <FlatList
             data={users}
             keyExtractor={(item) => item._id}
-            renderItem={({ item }) => (
-              <UserCard
-                info={item}
-                onPress={async () => {
-                  await mergeItemInAsyncStorage("users", item);
-                }}
-              />
-            )}
+            renderItem={({ item }) => <UserCard info={item} />}
             ListFooterComponent={
               <LoadMoreBtn
-                onPress={() => {
+                onPress={async () => {
                   onPressLoadMoreBtn(currentPage);
                 }}
               />
@@ -93,7 +86,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    alignItems: "left",
+    alignItems: "flex-start",
   },
   text: {
     fontFamily: "Roboto-Bold",

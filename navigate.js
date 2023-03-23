@@ -61,6 +61,9 @@ function AccountStackScreen({ userData, setUserData }) {
       <AccountStack.Screen
         name="Account"
         component={Account}
+        // children={() => (
+        //   <Account userData={userData} setUserData={setUserData} />
+        // )}
         options={{
           title: "Акаунт",
         }}

@@ -14,35 +14,30 @@ import {
   storeItemToAsyncStorage,
 } from "./AsyncStorageMethods";
 
-// TODO merge crash simulator
-
 const UserCard = ({ info }) => {
-  const { userAvatar, name, email } = info;
+  const onPressUserCard = async (item) => {
+    await storeItemToAsyncStorage("user", item);
+    Alert.alert("Done");
+  };
+
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={async () => {
-        const user = await getItemFromAsyncStorage("users");
-        if (user._id !== info._id) {
-          Alert.alert("This user is already existing");
-          return;
-        }
-        // await mergeItemInAsyncStorage("users", info);
-        Alert.success("Done. User added successfully");
-        console.log(info);
+      onPress={() => {
+        onPressUserCard(info);
       }}
     >
       <Image
         source={
-          userAvatar
-            ? { uri: userAvatar }
+          info.userAvatar
+            ? { uri: info.userAvatar }
             : require("../assets/accounttablogoactive.png")
         }
         style={styles.avatar}
       />
       <View>
-        <Text style={styles.name}>{name}</Text>
-        <Text>{email}</Text>
+        <Text style={styles.name}>{info.name}</Text>
+        <Text>{info.email}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -59,7 +54,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     width: 50,
     height: 50,
-    borderRadius: "50%",
+    borderRadius: 25,
   },
   name: {
     fontFamily: "Roboto-Bold",

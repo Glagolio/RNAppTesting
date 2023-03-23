@@ -1,25 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { gStyle } from "./Style/style";
 import HomepageStack from "./navigate";
 import * as Font from "expo-font";
-//import TabNavigation from './navigate';
 import * as SplashScreen from "expo-splash-screen";
 
-//import {getItemFromAsyncStorage, storeItemToAsyncStorage} from './components/AsyncStorageMethods'
-// export function
+// import {
+//   getItemFromAsyncStorage,
+//   storeItemToAsyncStorage,
+// } from "./components/AsyncStorageMethods";
+
 export default function App() {
-  /// add default constatnts
-  /// user sign in trgger
-  /// поиграйся с констнтой - поменяй ее по очереди на false и true что бы понять как это устроено
   const [userData, setUserData] = useState([]);
   const [isReady, setIsReady] = useState(false);
   /// trigger changes in userData
-  //useEffect(() => {
-  /// if changes registered in userData
-  //console.log(userData)
-
-  //}, [userData]);
+  // useEffect(() => {
+  //   // / if changes registered in userData
+  //   console.log(userData);
+  // }, [userData]);
   /// STORE USER TO ASYNC STORAGE EXAMPLE
   /*
   const userArrayData = 
@@ -38,16 +36,15 @@ export default function App() {
 
   /// on app load check if user exist in asyncStorage
   // GET THE USER ARRAY FROM ASYNC STORAGE EXAMPLE
-  /*const getNewData = async () => {
-    const newItem = await getItemFromAsyncStorage('user')
-    /// wait until loaded
-    //console.log(newItem)
-      if(newItem) {
-        // set state
-        setUserData(newItem)
-      }
-    
-  } */
+  // const getNewData = async () => {
+  //   const newItem = await getItemFromAsyncStorage("user");
+  //   //   /// wait until loaded
+  //   //   //console.log(newItem)
+  //   if (newItem) {
+  //     //     // set state
+  //     setUserData(newItem);
+  //   }
+  // };
   /// hit the function
 
   useEffect(() => {
@@ -67,7 +64,7 @@ export default function App() {
     }
     prepare();
     /// call it once by this method
-    //getNewData()
+    // getNewData();
   }, []);
 
   if (!isReady) {

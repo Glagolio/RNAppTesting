@@ -17,28 +17,47 @@ import {
   deleteItemFromAsyncStorage,
 } from "./AsyncStorageMethods";
 
-export default function Account({ userData, setUserData }) {
+export default function Account() {
   /// main navigation usage
   const navigation = useNavigation();
-  //const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    const getItem = async () => {
-      const data = await getItemFromAsyncStorage("users");
-      console.log(data);
+    // const getItem = async () => {
+    //   const data = await getItemFromAsyncStorage("users");
+    //   console.log(data);
+    // };
+    // getItem();
+
+    const getUser = async () => {
+      const user = await getItemFromAsyncStorage("user");
+      setUserData(user);
     };
-    getItem();
+    getUser();
   }, []);
+
+  if (!userData) {
+    return null;
+  }
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.center}>
         <View style={styles.imageView}>
           <Image
-            source={require("../assets/accounttablogoactive.png")}
+            source={
+              userData.userAvatar
+                ? { uri: userData.userAvatar }
+                : require("../assets/accounttablogoactive.png")
+            }
             style={styles.logo}
           />
-          <Text style={styles.accountName}>Cherry Chevapravatdumrong</Text>
+          <Text style={styles.accountName}>
+            {userData ? userData.name : "Cherry Chevapravatdumrong"}
+          </Text>
+          <Text style={styles.email}>
+            {userData.email ? userData.email : "default@mail.com"}
+          </Text>
           <TouchableOpacity
             style={styles.dontTouchBtn}
             onPress={() => {
@@ -73,13 +92,17 @@ const styles = StyleSheet.create({
   logo: {
     width: 50,
     height: 50,
-    display: "block",
     marginBottom: 15,
+    borderRadius: 25,
   },
   accountName: {
     fontFamily: "Roboto-Bold",
     fontSize: 24,
     textAlign: "center",
+    marginBottom: 5,
+  },
+  email: {
+    fontFamily: "Roboto-Regular",
     marginBottom: 65,
   },
   dontTouchBtn: {
